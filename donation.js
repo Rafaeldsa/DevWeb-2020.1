@@ -1,4 +1,4 @@
-var div = document.querySelector('div#doacoes');
+var div = document.querySelector('div#d1');
 var body = document.querySelector('body#corpo');
 
 async () => {
@@ -17,8 +17,5 @@ async () => {
 	newDiv.appendChild(h4);
 	newDiv.appendChild(p);
 
-	newDiv.style.margin = 0;
-	newDiv.style.width = 250;
-	newDiv.style.height = 100;
 	body.appendChild(newDiv);
 };
