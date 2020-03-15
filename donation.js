@@ -1,8 +1,7 @@
 var div = document.querySelector('div#doacoes');
-var btn = document.querySelector('button#btn1');
 var body = document.querySelector('body#corpo');
 
-btn.onclick = async () => {
+async () => {
 	let response = await fetch('data.json');
 	let dados = await response.json();
 	var doador = dados[0]['nome'];
@@ -18,5 +17,8 @@ btn.onclick = async () => {
 	newDiv.appendChild(h4);
 	newDiv.appendChild(p);
 
+	newDiv.style.margin = 0;
+	newDiv.style.width = 250;
+	newDiv.style.height = 100;
 	body.appendChild(newDiv);
 };
