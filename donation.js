@@ -1,7 +1,11 @@
-var div = document.querySelector('div#d1');
+var div = document.querySelector('div#doacoes');
 var body = document.querySelector('body#corpo');
+var h1 = document.querySelector('h1#head');
 
-async () => {
+h1.style.backgroundColor = 'red';
+h1.style.textAlign = 'center';
+
+btn.onclick = async () => {
 	let response = await fetch('data.json');
 	let dados = await response.json();
 	var doador = dados[0]['nome'];
