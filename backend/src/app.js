@@ -36,6 +36,7 @@ process.on("SIGINT", () => {
     process.exit(0);
   });
 });
+module.exports = db;
 
 app.use(cors());
 app.use(express.json());

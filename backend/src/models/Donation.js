@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+const moment = require("moment");
 const Schema = mongoose.Schema;
+
 const DonationSchema = new Schema({
   doador: {
     type: String,
@@ -14,8 +16,8 @@ const DonationSchema = new Schema({
     requires: true,
   },
   data: {
-    type: Date,
-    default: Date.now,
+    type: String,
+    default: moment().format("L"),
   },
 });
 
