@@ -14,23 +14,24 @@ module.exports = {
     const donations = await Donation.find(
       {},
       "doador tipoSanguineo hospital data -_id"
-    );
+    )
+      .limit(5)
+      .skip((page - 1) * 5);
 
     res.header("X-Total-Count", count);
     return res.json(donations);
   },
 
   async create(req, res) {
+    const { doador, tipoSanguineo, hospital } = req.body;
     const donation = new Donation({
-      doador: req.body.doador,
-      tipoSanguineo: req.body.tipoSanguineo,
-      hospital: req.body.hospital,
+      doador,
+      tipoSanguineo,
+      hospital,
     });
-    await donation.save();
+    const { id } = await donation.save();
 
-    const { doador } = donation;
-
-    res.send(doador);
+    res.json({ id });
   },
 
   async delete(req, res) {
