@@ -5,8 +5,8 @@ const DonationController = require("./controllers/DonationController");
 const UserController = require("./controllers/UserController");
 const LoginController = require("./controllers/LoginController");
 
-router.get("/donations", DonationController.list);
-router.post("/donations", DonationController.create);
+router.get("/donations", LoginController.verifyJWT, DonationController.list);
+router.post("/donations", LoginController.verifyJWT, DonationController.create);
 router.delete("/:id", DonationController.delete);
 
 router.get("/users", UserController.index);

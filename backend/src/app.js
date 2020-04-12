@@ -6,7 +6,7 @@ const cors = require("cors");
 const routes = require("./routes");
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
+//app.use(express.urlencoded({ extended: true }));
 
 // Database
 mongoose.connect(process.env.DATABASE_CONNECTION_STRING, {
@@ -36,7 +36,6 @@ process.on("SIGINT", () => {
     process.exit(0);
   });
 });
-module.exports = db;
 
 app.use(cors());
 app.use(express.json());

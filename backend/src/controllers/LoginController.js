@@ -14,10 +14,10 @@ module.exports = {
       const authUser = await User.findOne({ email: emailUser });
 
       if (authUser === null) {
-        return "Usuario não encontrado!";
+        res.json({ message: "Usuario não encontrado!" });
       }
-
-      var token = jwt.sign({ senhaUser }, process.env.SECRET, {
+      const { whatsapp } = authUser;
+      var token = jwt.sign({ whatsapp }, process.env.SECRET, {
         expiresIn: 604800, // expires in 1 week
       });
 
@@ -25,5 +25,24 @@ module.exports = {
     } catch (error) {
       res.status(500).send({ message: "Erro ao realizar login" });
     }
+  },
+
+  verifyJWT(req, res, next) {
+    var token = req.headers["authorization"];
+    if (!token)
+      return res
+        .status(401)
+        .send({ auth: false, message: "No token provided." });
+
+    jwt.verify(token, process.env.SECRET, function (err, decoded) {
+      if (err)
+        return res
+          .status(500)
+          .send({ auth: false, message: "Failed to authenticate token." });
+
+      // se tudo estiver ok, salva no request para uso posterior
+      req.userWhatsapp = decoded.whatsapp;
+      next();
+    });
   },
 };
