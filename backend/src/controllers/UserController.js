@@ -23,7 +23,10 @@ module.exports = {
       cidade,
       uf,
     } = req.body;
-
+    const existUser = await User.findOne({ email: email });
+    if (existUser !== null) {
+      res.json({ message: "Usuário já existe!" });
+    }
     const user = new User({
       name,
       tipoSanguineo,

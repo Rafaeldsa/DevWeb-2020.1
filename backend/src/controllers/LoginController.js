@@ -14,7 +14,7 @@ module.exports = {
       const authUser = await User.findOne({ email: emailUser });
 
       if (authUser === null) {
-        res.json({ message: "Usuario não encontrado!" });
+        res.json({ message: "Usuario invalido!" });
       }
       const { whatsapp } = authUser;
       var token = jwt.sign({ whatsapp }, process.env.SECRET, {
