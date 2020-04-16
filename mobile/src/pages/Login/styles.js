@@ -1,59 +1,67 @@
-import styled from "styled-components/native";
+import { StyleSheet } from "react-native";
+import Constants from "expo-constants";
 
-export const Container = styled.View`
-  display: flex;
-  flex: 1;
-  background-color: #444a5a;
-  padding: 40px;
-  justify-content: center;
-  align-items: stretch;
-`;
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 24,
+    paddingTop: Constants.statusBarHeight + 20,
+  },
 
-export const Title = styled.Text`
-  text-align: center;
-  color: #ffffff;
-  font-size: 24px;
-  font-weight: bold;
-`;
+  header: {
+    marginTop: 150,
+    alignItems: "center",
+  },
 
-export const TextInformation = styled.Text`
-  text-align: center;
-  margin-top: 10px;
-  font-size: 14px;
-  color: #dddddd;
-  line-height: 21px;
-`;
+  title: {
+    fontSize: 48,
+    color: "#e02041",
+  },
 
-export const Error = styled.Text`
-  color: #e37a7a;
-  text-align: center;
-  margin-top: 10px;
-`;
+  loginContainer: {
+    marginTop: 75,
+    padding: 24,
+    borderRadius: 8,
+    backgroundColor: "#FFF",
+    marginBottom: 16,
+  },
 
-export const Form = styled.View`
-  margin-top: 20px;
-`;
+  entrada: {
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 8,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    backgroundColor: "#FFF",
+    borderColor: "black",
+  },
 
-export const Input = styled.TextInput`
-  background-color: #ffffff;
-  border-radius: 3px;
-  height: 44px;
-  padding: 0px 20px;
-  margin-bottom: 10px;
-`;
+  actions: {
+    marginTop: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
 
-export const Button = styled.TouchableOpacity`
-  background-color: #7a91ca;
-  border-radius: 3px;
-  height: 44px;
-  padding: 0px 20px;
-  margin-top: 10px;
-  justify-content: center;
-  align-items: center;
-`;
+  button: {
+    marginTop: 0,
+    backgroundColor: "#e02041",
+    borderRadius: 8,
+    height: 50,
+    width: "48%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-export const ButtonText = styled.Text`
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 14px;
-`;
+  actiontext: {
+    color: "#FFF",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+});
