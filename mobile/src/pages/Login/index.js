@@ -19,7 +19,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
   function navigateToResgiter() {
-    navigation.navigate("Donation");
+    navigation.navigate("Register");
   }
   async function singIn(emailUser, senhaUser) {
     const navigation = useNavigation();
@@ -67,7 +67,7 @@ export default function Login() {
         <TextInput
           style={styles.entrada}
           underlineColorAndroid="transparent"
-          placeholder="Password"
+          placeholder="Senha"
           placeholderTextColor="#e02041"
           secureTextEntry={true}
           value={senhaUser}
