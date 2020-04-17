@@ -6,6 +6,7 @@ const AppStack = createStackNavigator();
 
 import Login from "./pages/Login";
 import Donation from "./pages/Donation";
+import Register from "./pages/Register";
 
 export default function Routes() {
   return (
@@ -13,6 +14,7 @@ export default function Routes() {
       <AppStack.Navigator screenOptions={{ headerShown: false }}>
         <AppStack.Screen name="Login" component={Login} />
         <AppStack.Screen name="Donation" component={Donation} />
+        <AppStack.Screen name="Register" component={Register} />
       </AppStack.Navigator>
     </NavigationContainer>
   );

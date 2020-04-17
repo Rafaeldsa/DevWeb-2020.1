@@ -20,7 +20,7 @@ export default StyleSheet.create({
 
   loginContainer: {
     marginTop: 75,
-    padding: 24,
+    padding: 16,
     borderRadius: 8,
     backgroundColor: "#FFF",
     marginBottom: 16,
@@ -63,5 +63,25 @@ export default StyleSheet.create({
     color: "#FFF",
     fontSize: 15,
     fontWeight: "bold",
+  },
+  detailsButton: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  detailsButtonText: {
+    marginRight: 18,
+    color: "black",
+    fontSize: 15,
+    fontWeight: "bold",
+  },
+  cadastro: {
+    marginTop: 16,
+    padding: 16,
+    borderRadius: 8,
+    backgroundColor: "#FFF",
+    marginBottom: 16,
+    alignItems: "center",
   },
 });

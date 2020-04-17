@@ -1,75 +1,99 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 import {
-  Platform,
   Text,
   TextInput,
   TouchableOpacity,
   View,
+  AsyncStorage,
+  Alert,
 } from "react-native";
 
 import api from "../../services/api";
 import styles from "./styles";
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      emailUser: "",
-      senhaUser: "",
-    };
+export default function Login() {
+  const [emailUser, setEmailUser] = useState("");
+  const [senhaUser, setSenhaUser] = useState("");
+  const [token, setToken] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigation = useNavigation();
+  function navigateToResgiter() {
+    navigation.navigate("Donation");
   }
-  login = async (emailUser, senhaUser) => {
+  async function singIn(emailUser, senhaUser) {
+    const navigation = useNavigation();
     const res = await api.post("login", {
       emailUser,
       senhaUser,
     });
-    alert(JSON.stringify(res.data));
-  };
-  handleEmail = (text) => {
-    this.setState({ emailUser: text });
-  };
-  handlePassword = (text) => {
-    this.setState({ password: text });
-  };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.title}>Doe Sangue</Text>
+    if (!res.data[0]) {
+      setErrorMessage(res.data.message);
+      Alert.alert(errorMessage);
+      return;
+    }
+    const user = res.data[1].user;
+    setToken(res.data[0].authorization);
+    _storeData(token, user);
+    Alert.alert("Login realizado com sucesso!");
+  }
+  async function _storeData(token, user) {
+    try {
+      await AsyncStorage.multiSet([
+        ["@DoeSangue:token", token],
+        ["@DoeSangue:user", JSON.stringify(user)],
+      ]);
+    } catch (error) {
+      // Error saving data
+    }
+  }
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>DoeSangue</Text>
+      </View>
+
+      <View style={styles.loginContainer}>
+        <TextInput
+          style={styles.entrada}
+          underlineColorAndroid="transparent"
+          placeholder="Email"
+          placeholderTextColor="#e02041"
+          value={emailUser}
+          onChangeText={(value) => setEmailUser(value)}
+        />
+        <TextInput
+          style={styles.entrada}
+          underlineColorAndroid="transparent"
+          placeholder="Password"
+          placeholderTextColor="#e02041"
+          secureTextEntry={true}
+          value={senhaUser}
+          onChangeText={(value) => setSenhaUser(value)}
+        />
+        <View style={styles.actions}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => singIn(emailUser, senhaUser)}
+          >
+            <Text style={styles.actiontext}> Entrar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.actiontext}>Esqueci a Senha</Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.loginContainer}>
-          <TextInput
-            style={styles.entrada}
-            underlineColorAndroid="transparent"
-            placeholder="Email"
-            placeholderTextColor="#e02041"
-            autoCapitalize="none"
-            onChangeText={this.handleEmail}
-          />
-          <TextInput
-            style={styles.entrada}
-            underlineColorAndroid="transparent"
-            placeholder="Password"
-            placeholderTextColor="#e02041"
-            autoCapitalize="none"
-            secureTextEntry={true}
-            onChangeText={this.handlePassword}
-          />
-          <View style={styles.actions}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() =>
-                this.login(this.state.emailUser, this.state.senhaUser)
-              }
-            >
-              <Text style={styles.actiontext}> Entrar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.actiontext}>Esqueci a Senha</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.cadastro}>
+          <TouchableOpacity
+            style={styles.detailsButton}
+            onPress={() => navigateToResgiter()}
+          >
+            <Text style={styles.detailsButtonText}>Não tenho cadastro</Text>
+            <Feather name="user" size={24} color="#e02041" />
+          </TouchableOpacity>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
