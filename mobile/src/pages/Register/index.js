@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import { getAllStates, getAllCities, getStateCities } from "easy-location-br";
+import RNPickerSelect from "react-native-picker-select";
 import {
   Text,
   TextInput,
@@ -14,12 +16,37 @@ import styles from "./styles";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [estadoAtual, setEstadoAtual] = useState("");
+  var cidades = [];
+  var estados = [];
 
   const navigation = useNavigation();
 
   function navigateBack() {
     navigation.goBack();
   }
+  function carregaEstados() {
+    for (var j = 0; j < getAllStates().length; j++) {
+      estados[j] = {
+        label: getAllStates()[j].id,
+        value: getAllStates()[j].id,
+      };
+    }
+  }
+
+  useEffect(() => {
+    for (var j = 0; j < getStateCities(estadoAtual).length; j++) {
+      cidades[j] = {
+        label: getStateCities(estadoAtual)[j].id,
+        value: getStateCities(estadoAtual)[j].name,
+      };
+    }
+  }, [estadoAtual]);
+
+  carregaEstados();
+
+  console.log(cidades);
+  console.log(estadoAtual);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -48,6 +75,18 @@ export default function Register() {
           value={senha}
           onChangeText={(value) => setSenha(value)}
         />
+        <View>
+          <RNPickerSelect
+            onValueChange={(value) => {
+              setEstadoAtual(value);
+            }}
+            items={estados}
+          />
+          <RNPickerSelect
+            onValueChange={(value) => console.log(value.value)}
+            items={cidades}
+          />
+        </View>
       </View>
       <View style={styles.cadastro}>
         <TouchableOpacity

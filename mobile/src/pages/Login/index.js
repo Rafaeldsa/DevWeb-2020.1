@@ -22,7 +22,6 @@ export default function Login() {
     navigation.navigate("Register");
   }
   async function singIn(emailUser, senhaUser) {
-    const navigation = useNavigation();
     const res = await api.post("login", {
       emailUser,
       senhaUser,
@@ -37,6 +36,7 @@ export default function Login() {
     setToken(res.data[0].authorization);
     _storeData(token, user);
     Alert.alert("Login realizado com sucesso!");
+    navigation.navigate("Donation");
   }
   async function _storeData(token, user) {
     try {
